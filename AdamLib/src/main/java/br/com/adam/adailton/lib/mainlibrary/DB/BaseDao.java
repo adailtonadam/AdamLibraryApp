@@ -1,4 +1,4 @@
-package com.br.adailton.adam.lib.mainlibrary.DB;
+package br.com.adam.adailton.lib.mainlibrary.DB;
 
 
 import android.content.ContentValues;
@@ -6,16 +6,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-public class BaseDao {
+public abstract class BaseDao {
     protected Context ctx;
     protected String tableName;
     protected String columnId;
     String[] columns;
 
 
-    public DB getNewDb(Context context){
-        return  new DB(context);
-    }
+    abstract public DB getNewDb(Context context);
 
     public void getContentValues(ContentValues ctv, BaseTable table) {
     }
@@ -39,7 +37,7 @@ public class BaseDao {
      */
     public long insert(BaseTable table) {
         long retValue = -1;
-        SQLiteDatabase db = new DB(ctx).getWritableDatabase();
+        SQLiteDatabase db = getNewDb(ctx).getWritableDatabase();
         ContentValues ctv = new ContentValues();
         getContentValues(ctv, table);
         try {
@@ -54,7 +52,7 @@ public class BaseDao {
 
 
     public void deleteAll() {
-        SQLiteDatabase db = new DB(ctx).getWritableDatabase();
+        SQLiteDatabase db = getNewDb(ctx).getWritableDatabase();
         db.delete(tableName, null, null);
         db.execSQL("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='" + tableName + "';");
         db.close();
@@ -62,7 +60,7 @@ public class BaseDao {
 
 
     public boolean delete(BaseTable table) {
-        SQLiteDatabase db = new DB(ctx).getWritableDatabase();
+        SQLiteDatabase db = getNewDb(ctx).getWritableDatabase();
         boolean retValue = (db.delete(tableName, columnId + "=?", new String[]{"" + String.valueOf(table.getId())}) > 0);
         db.close();
         return retValue;
@@ -70,14 +68,14 @@ public class BaseDao {
 
 
     public boolean delete(long id) {
-        SQLiteDatabase db = new DB(ctx).getWritableDatabase();
+        SQLiteDatabase db = getNewDb(ctx).getWritableDatabase();
         boolean retValue = (db.delete(tableName, columnId + "=?", new String[]{"" + String.valueOf(id)}) > 0);
         db.close();
         return retValue;
     }
 
     public boolean update(BaseTable table) {
-        SQLiteDatabase db = new DB(ctx).getWritableDatabase();
+        SQLiteDatabase db = getNewDb(ctx).getWritableDatabase();
         ContentValues ctv = new ContentValues();
         getContentValues(ctv, table);
         int retValue = 0;
@@ -97,7 +95,7 @@ public class BaseDao {
 
 
     public BaseTable getById(Long ID) {
-        SQLiteDatabase db = new DB(ctx).getReadableDatabase();
+        SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
         Cursor rs = db.query(tableName, columns, columnId + "=?", new String[]{ID.toString()}, null, null, null);
 
         BaseTable thing = null;
@@ -115,7 +113,7 @@ public class BaseDao {
 	/*	
 	public List<Thing> getAll() {
 
-		SQLiteDatabase db = new DB(ctx).getReadableDatabase();
+		SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
 		Cursor rs = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_NOME , null);
 		List<Thing> lista = new ArrayList<Thing>();
 		while (rs.moveToNext()) {
@@ -132,7 +130,7 @@ public class BaseDao {
 	/*
 	 public boolean insertList(List<Thing> vo) {
 		int auxCount = 0;
-		SQLiteDatabase db = new DB(ctx).getWritableDatabase();
+		SQLiteDatabase db = getNewDb(ctx).getWritableDatabase();
 		db.execSQL("BEGIN IMMEDIATE TRANSACTION");
 		ContentValues ctv = new ContentValues();
 		for (int i = 0; i < vo.size(); i++) {
@@ -152,7 +150,7 @@ public class BaseDao {
 
 	/*
 	 	public Thing getByName(String  Nome) {
-		SQLiteDatabase db = new DB(ctx).getReadableDatabase();
+		SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
 		String command = "SELECT * FROM " + TABLE_NAME + " WHERE "+COLUMN_NOME + "='" + Nome +"'";
 		Cursor rs = db.rawQuery(command, null);
 		Thing thing = null;

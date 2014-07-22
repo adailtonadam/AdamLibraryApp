@@ -1,4 +1,4 @@
-package com.br.adailton.adam.lib.mainlibrary.DB;
+package br.com.adam.adailton.lib.mainlibrary.DB;
 
 
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-abstract class DB extends SQLiteOpenHelper {
+public abstract class DB extends SQLiteOpenHelper {
 
 
 
@@ -14,25 +14,25 @@ abstract class DB extends SQLiteOpenHelper {
     * Executed to create new tables not linked
     * Ex.:db.execSQL(BaseDao.DATABASE_CREATE_TABLE);
     * */
-    abstract void onCreateNormalTables(SQLiteDatabase db);
+    public abstract void onCreateNormalTables(SQLiteDatabase db);
 
     /*
     * Executed to create new linked tables
     * Ex.:db.execSQL(BaseDao.DATABASE_CREATE_TABLE);
     * */
-    abstract void onCreateLinkedTables(SQLiteDatabase db);
+    public abstract void onCreateLinkedTables(SQLiteDatabase db);
 
     /*
     * Executed to upgrade  tables not linked
     * Ex.:db.execSQL(BaseDao.DATABASE_UPDATE);
     * */
-    abstract void onUpgradeNormalTables(SQLiteDatabase db);
+    public abstract void onUpgradeNormalTables(SQLiteDatabase db);
 
      /*
     * Executed to upgrade new linked tables
     * Ex.:db.execSQL(BaseDao.DATABASE_UPDATE);
     * */
-    abstract void onUpgradeLinkedTables(SQLiteDatabase db);
+    public abstract void onUpgradeLinkedTables(SQLiteDatabase db);
 
 
     /*

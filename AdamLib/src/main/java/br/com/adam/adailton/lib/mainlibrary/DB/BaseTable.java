@@ -1,4 +1,4 @@
-package com.br.adailton.adam.lib.mainlibrary.DB;
+package br.com.adam.adailton.lib.mainlibrary.DB;
 
 
 public class BaseTable {

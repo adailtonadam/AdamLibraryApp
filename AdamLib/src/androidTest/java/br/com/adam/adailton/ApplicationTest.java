@@ -1,4 +1,4 @@
-package com.br.adailton.adam.lib.mainlibrary;
+package br.com.adam.adailton;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
