@@ -14,14 +14,9 @@ public abstract class BaseDao {
 
 
     abstract public DB getNewDb(Context context);
+    abstract public void getContentValues(ContentValues ctv, BaseTable table);
+    abstract public BaseTable setTableValues(Cursor rs);
 
-    public void getContentValues(ContentValues ctv, BaseTable table) {
-    }
-
-
-    public BaseTable setTableValues(Cursor rs) {
-        return null;
-    }
 
 
     public BaseDao(Context ctx, String tableName, String columnId, String[] columns) {
