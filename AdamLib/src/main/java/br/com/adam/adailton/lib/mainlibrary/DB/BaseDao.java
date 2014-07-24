@@ -6,6 +6,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseDao {
     protected Context ctx;
     protected String tableName;
@@ -102,9 +105,9 @@ public abstract class BaseDao {
         return thing;
     }
 
-	
-	
-	
+
+
+
 	/*	
 	public List<Thing> getAll() {
 
@@ -117,7 +120,7 @@ public abstract class BaseDao {
 		}
 		db.close();
 		return lista;
-		
+
 	}
 	*/
 	
@@ -143,24 +146,7 @@ public abstract class BaseDao {
 	}
 	 */
 
-	/*
-	 	public Thing getByName(String  Nome) {
-		SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
-		String command = "SELECT * FROM " + TABLE_NAME + " WHERE "+COLUMN_NOME + "='" + Nome +"'";
-		Cursor rs = db.rawQuery(command, null);
-		Thing thing = null;
 
-		if (rs.moveToFirst()) {
-			thing = new Thing();
-			thing.setId(rs.getInt(rs.getColumnIndex(COLUMN_ID)));
-			thing.setNome(rs.getString(rs.getColumnIndex(COLUMN_NOME)));
-			thing.setCor(rs.getString(rs.getColumnIndex(COLUMN_COR)));
-			thing.setTipo(rs.getString(rs.getColumnIndex(COLUMN_TIPO)));
-		}
-		db.close();
-		return thing;
-	}
-	 */
 
 
 }

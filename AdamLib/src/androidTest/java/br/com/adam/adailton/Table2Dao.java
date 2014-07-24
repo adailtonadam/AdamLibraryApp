@@ -3,6 +3,10 @@ package br.com.adam.adailton;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.adam.adailton.lib.mainlibrary.DB.BaseDao;
 import br.com.adam.adailton.lib.mainlibrary.DB.BaseTable;
@@ -54,5 +58,28 @@ public class Table2Dao  extends BaseDao {
         item.setId(rs.getLong(rs.getColumnIndex(COLUMN_ID)));
         item.setDescription(rs.getString(rs.getColumnIndex(COLUMN_DESCRIPTION)));
         return item;
+    }
+
+    public List<Table2> getAllOrderBy() {
+        SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
+        Cursor rs = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_DESCRIPTION , null);
+        List<Table2> newList = new ArrayList<Table2>();
+        while (rs.moveToNext()) {
+            newList.add((Table2)setTableValues(rs));
+        }
+        db.close();
+        return newList;
+
+    }
+
+    public List<Table2> getAll() {
+        SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
+        Cursor rs = db.rawQuery("SELECT * FROM " + TABLE_NAME  , null);
+        List<Table2> newList = new ArrayList<Table2>();
+        while (rs.moveToNext()) {
+            newList.add((Table2)setTableValues(rs));
+        }
+        db.close();
+        return newList;
     }
 }

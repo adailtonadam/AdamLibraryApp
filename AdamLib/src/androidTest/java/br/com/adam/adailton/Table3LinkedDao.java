@@ -3,6 +3,10 @@ package br.com.adam.adailton;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.adam.adailton.lib.mainlibrary.DB.BaseDao;
 import br.com.adam.adailton.lib.mainlibrary.DB.BaseTable;
@@ -59,4 +63,23 @@ public class Table3LinkedDao  extends BaseDao {
         item.setTable2Id(rs.getLong(rs.getColumnIndex(COLUMN_TABLE_2_ID)));
         return item;
     }
+
+
+
+
+
+    public List<Table3Linked> getAll() {
+        SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
+        Cursor rs = db.rawQuery("SELECT * FROM " + TABLE_NAME  , null);
+        List<Table3Linked> newList = new ArrayList<Table3Linked>();
+        while (rs.moveToNext()) {
+            newList.add((Table3Linked)setTableValues(rs));
+        }
+        db.close();
+        return newList;
+    }
+
+
+
+
 }
