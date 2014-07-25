@@ -1,4 +1,4 @@
-package br.com.adam.adailton;
+package br.com.adam.adailton.adamlibraryapp;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

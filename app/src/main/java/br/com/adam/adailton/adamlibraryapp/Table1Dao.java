@@ -1,4 +1,4 @@
-package br.com.adam.adailton;
+package br.com.adam.adailton.adamlibraryapp;
 
 import android.content.ContentValues;
 import android.content.Context;

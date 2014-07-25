@@ -1,4 +1,4 @@
-package br.com.adam.adailton;
+package br.com.adam.adailton.adamlibraryapp;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,31 +15,29 @@ import br.com.adam.adailton.lib.mainlibrary.DB.DB;
 /**
  * Created by ad036950 on 23/07/2014.
  */
-public class Table3LinkedDao  extends BaseDao {
+public class Table2Dao  extends BaseDao {
 
-    public static String TABLE_NAME = "table3";
+    public static String TABLE_NAME = "table1";
 
     public static final String DATABASE_UPDATE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
 
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_TABLE_1_ID = "table1_id";
-    public static final String COLUMN_TABLE_2_ID = "table2_id";
+    public static final String COLUMN_DESCRIPTION = "description";
 
-    public static String[] COLUMNS = { COLUMN_ID, COLUMN_TABLE_1_ID, COLUMN_TABLE_2_ID };
+    public static String[] COLUMNS = { COLUMN_ID, COLUMN_DESCRIPTION };
 
     public static final String DATABASE_CREATE_TABLE = "create table " + TABLE_NAME
             + "("
             +      COLUMN_ID + " integer primary key  autoincrement "
-            + "," + COLUMN_TABLE_1_ID + " integer not null"
-            + "," + COLUMN_TABLE_2_ID + " integer not null"
-            + ");";
+            + "," + COLUMN_DESCRIPTION + " text not null unique"
+             + ");";
 
 
 
 
 
-    public Table3LinkedDao(Context ctx) {
+    public Table2Dao(Context ctx) {
         super(ctx, TABLE_NAME, COLUMN_ID, COLUMNS);
     }
 
@@ -50,36 +48,38 @@ public class Table3LinkedDao  extends BaseDao {
 
     @Override
     public void getContentValues(ContentValues ctv, BaseTable table) {
-        Table3Linked item = (Table3Linked) table;
-        ctv.put(COLUMN_TABLE_1_ID, item.getTable1Id());
-        ctv.put(COLUMN_TABLE_2_ID, item.getTable2Id());
+        Table2 item = (Table2) table;
+        ctv.put(COLUMN_DESCRIPTION, item.getDescription());
     }
 
     @Override
     public BaseTable setTableValues(Cursor rs) {
-        Table3Linked item = new Table3Linked();
+        Table2 item = new Table2();
         item.setId(rs.getLong(rs.getColumnIndex(COLUMN_ID)));
-        item.setTable1Id(rs.getLong(rs.getColumnIndex(COLUMN_TABLE_1_ID)));
-        item.setTable2Id(rs.getLong(rs.getColumnIndex(COLUMN_TABLE_2_ID)));
+        item.setDescription(rs.getString(rs.getColumnIndex(COLUMN_DESCRIPTION)));
         return item;
     }
 
+    public List<Table2> getAllOrderBy() {
+        SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
+        Cursor rs = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMN_DESCRIPTION , null);
+        List<Table2> newList = new ArrayList<Table2>();
+        while (rs.moveToNext()) {
+            newList.add((Table2)setTableValues(rs));
+        }
+        db.close();
+        return newList;
 
+    }
 
-
-
-    public List<Table3Linked> getAll() {
+    public List<Table2> getAll() {
         SQLiteDatabase db = getNewDb(ctx).getReadableDatabase();
         Cursor rs = db.rawQuery("SELECT * FROM " + TABLE_NAME  , null);
-        List<Table3Linked> newList = new ArrayList<Table3Linked>();
+        List<Table2> newList = new ArrayList<Table2>();
         while (rs.moveToNext()) {
-            newList.add((Table3Linked)setTableValues(rs));
+            newList.add((Table2)setTableValues(rs));
         }
         db.close();
         return newList;
     }
-
-
-
-
 }

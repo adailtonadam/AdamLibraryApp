@@ -4,5 +4,6 @@
     <string name="app_name">AdamLibraryApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="button_test_db">inicar teste</string>
 
 </resources>
