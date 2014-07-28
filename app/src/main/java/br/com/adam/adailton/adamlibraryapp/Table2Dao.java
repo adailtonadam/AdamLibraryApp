@@ -12,12 +12,10 @@ import br.com.adam.adailton.lib.mainlibrary.DB.BaseDao;
 import br.com.adam.adailton.lib.mainlibrary.DB.BaseTable;
 import br.com.adam.adailton.lib.mainlibrary.DB.DB;
 
-/**
- * Created by ad036950 on 23/07/2014.
- */
+
 public class Table2Dao  extends BaseDao {
 
-    public static String TABLE_NAME = "table1";
+    public static String TABLE_NAME = "table2";
 
     public static final String DATABASE_UPDATE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
